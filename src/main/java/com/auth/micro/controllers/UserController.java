@@ -1,6 +1,8 @@
 package com.auth.micro.controllers;
 
 import static com.auth.micro.security.SecurityConstants.SIGN_UP_URL;
+import static org.springframework.beans.BeanUtils.copyProperties;
+import static org.springframework.http.HttpStatus.CREATED;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,20 +25,20 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @PostMapping("/users")
+    @PostMapping(SecurityConstants.USERS_RESOURCE)
     public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest userRequest) {
 
         UserDto userDto = new UserDto();
 
-        BeanUtils.copyProperties(userRequest, userDto);
+        copyProperties(userRequest, userDto);
 
         UserDto createdUserDto = userService.createUser(userDto);
 
         UserResponse userResponse = new UserResponse();
 
-        BeanUtils.copyProperties(createdUserDto, userResponse);
+        copyProperties(createdUserDto, userResponse);
 
-        return new ResponseEntity<UserResponse>(userResponse, HttpStatus.CREATED);
+        return new ResponseEntity<UserResponse>(userResponse, CREATED);
     }
 
 }
