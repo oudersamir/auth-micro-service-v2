@@ -2,9 +2,10 @@ package com.auth.micro.services;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.auth.micro.dao.UserDto;
+import com.auth.micro.dto.UserDto;
 import com.auth.micro.entities.UserEntity;
 import com.auth.micro.repositories.UserRepository;
 
@@ -12,7 +13,12 @@ import com.auth.micro.repositories.UserRepository;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
+    
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    
 
     @Override
     public UserDto createUser(UserDto userToSave) {
@@ -25,6 +31,10 @@ public class UserServiceImpl implements UserService {
             UserEntity newUser = new UserEntity();
 
             BeanUtils.copyProperties(userToSave, newUser);
+            
+            newUser.setUserId("user Id");
+            newUser.setEncryptedPassword(bCryptPasswordEncoder.encode(userToSave.getPassword()));
+
 
             UserEntity createdUser = userRepository.save(newUser);
 

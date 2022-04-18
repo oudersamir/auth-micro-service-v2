@@ -1,25 +1,35 @@
 package com.auth.micro.responses;
 
+import java.io.Serializable;
 
-public class UserResponse {
+public class UserResponse implements Serializable{
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 5817632212016918738L;
 
     private String nom;
 
     private String prenom;
 
     private String userName;
+    
+    private String userId;
+
+    
+    public String getUserId() {
+        return userId;
+    }
+
+    
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     private String email;
 
-    private String password;
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public String getNom() {
         return nom;

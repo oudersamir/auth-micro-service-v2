@@ -1,4 +1,4 @@
-package com.auth.micro.dao;
+package com.auth.micro.dto;
 
 public class UserDto {
 

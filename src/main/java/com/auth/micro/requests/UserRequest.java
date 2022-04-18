@@ -1,6 +1,13 @@
 package com.auth.micro.requests;
 
-public class UserRequest {
+import java.io.Serializable;
+
+public class UserRequest  implements Serializable{
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8639161769741076761L;
 
     private String nom;
 
