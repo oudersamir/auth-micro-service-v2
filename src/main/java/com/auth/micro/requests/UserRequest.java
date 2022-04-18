@@ -1,6 +1,6 @@
 package com.auth.micro.requests;
 
-public class UserRquest {
+public class UserRequest {
 
     private String nom;
 

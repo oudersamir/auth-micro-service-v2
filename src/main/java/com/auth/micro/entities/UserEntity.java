@@ -34,6 +34,10 @@ public class UserEntity {
     @Column(nullable = false)
     private String email;
 
+    public UserEntity() {
+        super();
+    }
+
     public UserEntity(String nom, String prenom, String userName, String encryptedPassword, String email) {
         super();
         this.nom               = nom;

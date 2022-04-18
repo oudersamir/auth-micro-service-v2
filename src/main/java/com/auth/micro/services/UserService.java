@@ -1,9 +1,9 @@
 package com.auth.micro.services;
 
-import com.auth.micro.entities.UserEntity;
+import com.auth.micro.dao.UserDto;
 
 public interface UserService {
 
-    public UserEntity createUser(UserEntity userEntity);
+    public UserDto createUser(UserDto userDto);
 
 }
