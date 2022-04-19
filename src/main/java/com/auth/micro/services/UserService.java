@@ -5,5 +5,7 @@ import com.auth.micro.dto.UserDto;
 public interface UserService {
 
     public UserDto createUser(UserDto userDto);
+    public UserDto getUser(String email);
+
 
 }

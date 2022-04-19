@@ -1,6 +1,7 @@
 package com.auth.micro.controllers;
 
 import static com.auth.micro.security.SecurityConstants.SIGN_UP_URL;
+import static com.auth.micro.security.SecurityConstants.USERS_RESOURCE;
 import static org.springframework.beans.BeanUtils.copyProperties;
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -25,7 +26,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @PostMapping(SecurityConstants.USERS_RESOURCE)
+    @PostMapping(USERS_RESOURCE)
     public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest userRequest) {
 
         UserDto userDto = new UserDto();
