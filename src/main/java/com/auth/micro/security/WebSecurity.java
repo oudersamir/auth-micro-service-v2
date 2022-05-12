@@ -3,6 +3,7 @@ package com.auth.micro.security;
 import static com.auth.micro.security.SecurityConstants.LOGIN_PATH;
 import static com.auth.micro.security.SecurityConstants.SIGN_UP_URL;
 import static com.auth.micro.security.SecurityConstants.USERS_RESOURCE;
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.auth.micro.services.UserLoginService;
@@ -33,7 +35,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable();
         http.authorizeRequests().antMatchers(HttpMethod.POST, SIGN_UP_URL+USERS_RESOURCE).permitAll();
         http.authorizeRequests().anyRequest().authenticated().and().addFilter(getAuthenticationFilter()).addFilter(new AuthorizationFilter(authenticationManager()));
-
+        http.sessionManagement().sessionCreationPolicy(STATELESS);
     }
     
     private AuthenticationFilter getAuthenticationFilter() throws Exception {
