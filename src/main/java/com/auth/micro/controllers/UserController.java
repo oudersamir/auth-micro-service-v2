@@ -4,11 +4,14 @@ import static com.auth.micro.security.SecurityConstants.SIGN_UP_URL;
 import static com.auth.micro.security.SecurityConstants.USERS_RESOURCE;
 import static org.springframework.beans.BeanUtils.copyProperties;
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.FOUND;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +43,18 @@ public class UserController {
         copyProperties(createdUserDto, userResponse);
 
         return new ResponseEntity<UserResponse>(userResponse, CREATED);
+    }
+    
+    @GetMapping(USERS_RESOURCE+"/{userName}")
+    public ResponseEntity<UserResponse> getUser(@PathVariable String userName) {
+
+        UserDto userDto = userService.getUserByUserName(userName);
+
+        UserResponse userResponse = new UserResponse();
+
+        copyProperties(userDto, userResponse);
+
+        return new ResponseEntity<UserResponse>(userResponse, FOUND);
     }
 
 }

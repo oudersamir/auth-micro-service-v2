@@ -2,7 +2,7 @@ package com.auth.micro.security;
 
 import static com.auth.micro.SpringApplicationContext.getBean;
 import static com.auth.micro.security.SecurityConstants.EXPIRATION_TIME;
-import static com.auth.micro.security.SecurityConstants.HEADER_AUTHRIZATION;
+import static com.auth.micro.security.SecurityConstants.HEADER_AUTHORIZATION;
 import static com.auth.micro.security.SecurityConstants.TOKEN_PREFIX;
 import static com.auth.micro.security.SecurityConstants.TOKEN_SECRET;
 import static io.jsonwebtoken.SignatureAlgorithm.HS512;
@@ -66,7 +66,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                            .signWith(HS512, TOKEN_SECRET)
                            .compact();
         //
-        response.addHeader(HEADER_AUTHRIZATION,TOKEN_PREFIX+token);
+        response.addHeader(HEADER_AUTHORIZATION,TOKEN_PREFIX+token);
         //
         UserDto  userDto =((UserService)getBean("userServiceImpl")).getUser(userName);
         response.addHeader("user_id",userDto.getUserId());
