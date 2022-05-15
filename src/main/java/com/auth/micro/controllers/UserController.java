@@ -54,7 +54,7 @@ public class UserController {
     }
     
     @GetMapping(path=USERS_RESOURCE+"/{userName}",produces= {APPLICATION_XML_VALUE,APPLICATION_JSON_VALUE})
-    public ResponseEntity<UserResponse> getUser(@PathVariable String userName) {
+    public ResponseEntity<UserResponse> getUser(@PathVariable String userName)  {
 
         UserDto userDto = userService.getUserByUserName(userName);
 

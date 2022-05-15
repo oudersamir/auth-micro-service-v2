@@ -68,7 +68,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         //
         response.addHeader(HEADER_AUTHORIZATION,TOKEN_PREFIX+token);
         //
-        UserDto  userDto =((UserService)getBean("userServiceImpl")).getUser(userName);
+        UserDto userDto = ((UserService)getBean("userServiceImpl")).getUser(userName);
+       
         response.addHeader("user_id",userDto.getUserId());
 
         
