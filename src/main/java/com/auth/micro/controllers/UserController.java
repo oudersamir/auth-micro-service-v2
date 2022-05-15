@@ -7,10 +7,13 @@ import static org.springframework.http.HttpStatus.ACCEPTED;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.FOUND;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.http.MediaType.APPLICATION_XML_VALUE;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +36,8 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @PostMapping(USERS_RESOURCE)
+    @PostMapping(path=USERS_RESOURCE,consumes= {APPLICATION_XML_VALUE,APPLICATION_JSON_VALUE}
+                                    ,produces= {APPLICATION_XML_VALUE,APPLICATION_JSON_VALUE})
     public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest userRequest) {
 
         UserDto userDto = new UserDto();
@@ -49,7 +53,7 @@ public class UserController {
         return new ResponseEntity<UserResponse>(userResponse, CREATED);
     }
     
-    @GetMapping(USERS_RESOURCE+"/{userName}")
+    @GetMapping(path=USERS_RESOURCE+"/{userName}",produces= {APPLICATION_XML_VALUE,APPLICATION_JSON_VALUE})
     public ResponseEntity<UserResponse> getUser(@PathVariable String userName) {
 
         UserDto userDto = userService.getUserByUserName(userName);
@@ -61,7 +65,7 @@ public class UserController {
         return new ResponseEntity<UserResponse>(userResponse, FOUND);
     }
     
-    @DeleteMapping(USERS_RESOURCE+"/{userId}")
+    @DeleteMapping(path=USERS_RESOURCE+"/{userId}")
     public ResponseEntity<UserResponse> deleteUser(@PathVariable String userId) {
 
         userService.deleteUserByUserId(userId);
@@ -69,7 +73,8 @@ public class UserController {
         return new ResponseEntity<UserResponse>(NO_CONTENT);
     }
     
-    @PutMapping(USERS_RESOURCE+"/{userId}")
+    @PutMapping(path=USERS_RESOURCE+"/{userId}",consumes= {APPLICATION_XML_VALUE,APPLICATION_JSON_VALUE}
+                                               ,produces= {APPLICATION_XML_VALUE,APPLICATION_JSON_VALUE})
     public ResponseEntity<UserResponse> updateUser(@PathVariable String userId, @RequestBody UserRequest userRequest) {
        
         UserDto userDto = new UserDto();
