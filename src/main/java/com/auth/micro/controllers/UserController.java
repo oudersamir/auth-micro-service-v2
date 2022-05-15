@@ -10,6 +10,9 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_XML_VALUE;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,9 +25,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.auth.micro.dto.UserDto;
+import com.auth.micro.entities.UserEntity;
 import com.auth.micro.requests.UserRequest;
 import com.auth.micro.responses.UserResponse;
 import com.auth.micro.services.UserService;
@@ -63,6 +68,23 @@ public class UserController {
         copyProperties(userDto, userResponse);
 
         return new ResponseEntity<UserResponse>(userResponse, FOUND);
+    }
+    
+    @GetMapping(path=USERS_RESOURCE,produces= {APPLICATION_XML_VALUE,APPLICATION_JSON_VALUE})
+    public ResponseEntity<List> getUsers(@RequestParam(value="page")   int page,
+                                                 @RequestParam(value="limit")  int limit)  {
+
+        List<UserDto> usersDto = userService.getUsers(page, limit);
+
+        List<UserResponse> usersResponse = new ArrayList();
+
+        for (UserDto userDto : usersDto) {
+            UserResponse userResponse = new UserResponse();
+            copyProperties(userDto, userResponse);
+            usersResponse.add(userResponse);
+        }
+
+        return new ResponseEntity<List>(usersResponse, FOUND);
     }
     
     @DeleteMapping(path=USERS_RESOURCE+"/{userId}")

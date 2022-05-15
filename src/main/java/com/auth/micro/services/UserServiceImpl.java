@@ -6,10 +6,14 @@ import static org.springframework.beans.BeanUtils.copyProperties;
 import static org.springframework.http.HttpStatus.NOT_ACCEPTABLE;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -129,6 +133,25 @@ public class UserServiceImpl implements UserService {
         userRepository.save(userEntity);
 
         return true;
+    }
+
+
+
+    @Override
+    public List<UserDto> getUsers(int page, int limit) {
+
+        List<UserDto>    usersDto    = new ArrayList<>();
+        PageRequest      pageRequest = PageRequest.of(page, limit);
+        Page<UserEntity> pageUsers   = userRepository.findAll(pageRequest);
+        List<UserEntity> usersEntity = pageUsers.getContent();
+
+        for (UserEntity userEntity : usersEntity) {
+            UserDto userDto = new UserDto();
+            copyProperties(userEntity, userDto);
+            usersDto.add(userDto);
+        }
+
+        return usersDto;
     }
 
 }
