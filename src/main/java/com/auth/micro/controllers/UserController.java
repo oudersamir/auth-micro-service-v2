@@ -13,6 +13,8 @@ import static org.springframework.http.MediaType.APPLICATION_XML_VALUE;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,7 +45,7 @@ public class UserController {
 
     @PostMapping(path=USERS_RESOURCE,consumes= {APPLICATION_XML_VALUE,APPLICATION_JSON_VALUE}
                                     ,produces= {APPLICATION_XML_VALUE,APPLICATION_JSON_VALUE})
-    public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest userRequest) {
+    public ResponseEntity<UserResponse> createUser(@RequestBody @Valid UserRequest userRequest) {
 
         UserDto userDto = new UserDto();
 
